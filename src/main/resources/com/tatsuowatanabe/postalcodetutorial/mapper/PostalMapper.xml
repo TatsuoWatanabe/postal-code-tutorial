@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tatsuowatanabe.postalcodetutorial.mapper.PostalMapper">
+	<resultMap id="result" type="com.tatsuowatanabe.postalcodetutorial.entity.Postal">
+		<result column="id"              property="id" />
+		<result column="code"            property="code" />
+		<result column="prefecture_name" property="prefecture_name" />
+		<result column="prefecture_code" property="prefecture_code" />
+		<result column="address1"        property="address1" />
+		<result column="address2"        property="address2" />
+	</resultMap>
+	
+	<select id="findWithPaging" resultMap="result">
+		select id, code, prefecture_name, prefecture_code, address1, address2
+		from postal_info
+		Limit 100
+	</select>
+
+</mapper>

@@ -2,20 +2,22 @@
 <%@ taglib prefix="c"    uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fn"   uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="titleString" value="PostalCodeTutorial" />
+<c:set var="notFoundMsg" value="ご希望のデータが見つかりませんでしたか? 抽出条件を変更して、再度検索してみてください。" />
 
 <jsp:include page="../parts/header.jsp">
-	<jsp:param name="title" value="${title}" />
+	<jsp:param name="title" value="${titleString}" />
 </jsp:include>
 
 <div class="container">
-	<h3>${title}</h3>
+	<h3>${titleString}</h3>
 	<form:form modelAttribute="postalForm" method="get">
 		<div class="row">
 			<div class="input-field col s3">
 				<form:input path="code" />
 				<label for="code">〒</label>
 			</div><!-- /.input-field -->
-			<div class="input-field col s5">
+			<div class="input-field col s3">
 				<form:select path="prefecture_code" multiple="false">
 					<form:option value="" label="" />
 					<form:options 
@@ -42,12 +44,12 @@
 				<a href="${pageContext.request.contextPath}" class="btn red waves-effect waves-light">Reset</a>
 			</div><!-- /.input-field -->
 		</div><!-- /.row -->
-		
 	</form:form>
 
 	<jsp:include page="../parts/limitedRowsResult.jsp">
-		<jsp:param name="rows"      value="${fn:length(postals)}" />
-		<jsp:param name="foundRows" value="${totalPostals}" />
+		<jsp:param name="rows"        value="${fn:length(postals)}" />
+		<jsp:param name="foundRows"   value="${totalPostals}" />
+		<jsp:param name="notFoundMsg" value="${notFoundMsg}" />
 	</jsp:include>
 	
 	<table class="bordered highlight">
@@ -76,11 +78,15 @@
 					</td>
 				</tr>
 			</c:forEach>
+			<c:if test="${fn:length(postals) == 0}">
+				<tr><td colspan="4">${notFoundMsg}</td></tr>
+			</c:if>
 		</tbody>
 	</table>
 	<jsp:include page="../parts/limitedRowsResult.jsp">
-		<jsp:param name="rows"      value="${fn:length(postals)}" />
-		<jsp:param name="foundRows" value="${totalPostals}" />
+		<jsp:param name="rows"        value="${fn:length(postals)}" />
+		<jsp:param name="foundRows"   value="${totalPostals}" />
+		<jsp:param name="notFoundMsg" value="${notFoundMsg}" />
 	</jsp:include>
 </div><!-- /.container -->
 

@@ -23,10 +23,8 @@ public class PostalCodeController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String index(@ModelAttribute PostalForm form, Model model) {
 		PostalDto dto = form.toDto();
-		
 		model.addAttribute("postals"     , postalService.findLimited(dto));
 		model.addAttribute("totalPostals", postalService.foundRows(dto));
-		model.addAttribute("title"       , "PostalCodeTutorial");
 		model.addAttribute("postalForm"  , form);
 		model.addAttribute("prefectures" , postalService.findPrefectures());
 		

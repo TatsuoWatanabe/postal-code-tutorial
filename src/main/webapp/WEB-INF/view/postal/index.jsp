@@ -16,7 +16,15 @@
 				<label for="code">〒</label>
 			</div><!-- /.input-field -->
 			<div class="input-field col s5">
-				<form:select path="prefecture_code" items="${prefectures}" multiple="false" />
+				<form:select path="prefecture_code" multiple="false">
+					<form:option value="" label="" />
+					<form:options 
+						items="${prefectures}"
+						itemValue="code"
+						itemLabel="prefectureName"
+					/>
+				</form:select>
+
 				<label>都道府県</label>
 			</div><!-- /.input-field -->
 		</div><!-- /.row -->

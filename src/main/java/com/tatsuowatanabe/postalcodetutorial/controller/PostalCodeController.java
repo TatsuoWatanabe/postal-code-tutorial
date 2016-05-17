@@ -23,13 +23,12 @@ public class PostalCodeController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String index(@ModelAttribute PostalForm form, Model model) {
 		PostalDto dto = form.toDto();
-		List<PostalDto> postals = postalService.findLimited(dto);
+		
+		model.addAttribute("postals"     , postalService.findLimited(dto));
 		model.addAttribute("totalPostals", postalService.foundRows(dto));
 		model.addAttribute("title"       , "PostalCodeTutorial");
-		model.addAttribute("postals"     , postals);
 		model.addAttribute("postalForm"  , form);
-		List<String> prefectures = Arrays.asList("東京都", "北海道", "大阪府");
-		model.addAttribute("prefectures", prefectures);
+		model.addAttribute("prefectures" , postalService.findPrefectures());
 		
 		return "postal/index";
 	}

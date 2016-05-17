@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tatsuowatanabe.postalcodetutorial.dto.PostalDto;
+import com.tatsuowatanabe.postalcodetutorial.dto.PrefectureDto;
 import com.tatsuowatanabe.postalcodetutorial.entity.Postal;
+import com.tatsuowatanabe.postalcodetutorial.entity.Prefecture;
 import com.tatsuowatanabe.postalcodetutorial.mapper.PostalMapper;
 
 @Service
@@ -31,6 +33,14 @@ public class PostalService {
 
 	public Integer foundRows(PostalDto dto) {
 		return postalMapper.foundRows(dto);
+	}
+
+	public List<PrefectureDto> findPrefectures() {
+		List<Prefecture> list = postalMapper.findPrefectures();
+		List<PrefectureDto> resultList = list.stream().map(
+			entity -> entity.toDto()
+		).collect(Collectors.toList());
+		return resultList;
 	}
 
 }

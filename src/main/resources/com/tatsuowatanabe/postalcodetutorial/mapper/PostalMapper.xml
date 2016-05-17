@@ -13,9 +13,9 @@
 
 	<sql id="findCondition">
 		<where>
-			<if test="code != null">
-				code like Concat(#{code}, '%')
-			</if>
+			<if test="code            != null and code            != ''">code like Concat(#{code}, '%')</if>
+			<if test="prefecture_code != null and prefecture_code != ''">AND prefecture_code = #{prefecture_code}</if>
+			<if test="address1        != null and address1        != ''">AND Concat(prefecture_name, address1, address2) Like Concat('%', #{address1}, '%')</if>
 		</where>
 	</sql>
 	<select id="findLimited" resultMap="result">
@@ -26,6 +26,16 @@
 	</select>
 	<select id="foundRows" resultType="int">
 		Select Count(*) From postal_info <include refid="findCondition" />
+	</select>
+	
+	<resultMap id="resultPrefecture" type="com.tatsuowatanabe.postalcodetutorial.entity.Prefecture">
+		<result column="code"            property="code" />
+		<result column="prefecture_name" property="prefectureName" />
+	</resultMap>
+	<select id="findPrefectures" resultMap="resultPrefecture">
+		Select *
+		From prefecture
+		Order By code
 	</select>
 
 </mapper>

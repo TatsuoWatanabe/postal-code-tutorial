@@ -1,5 +1,9 @@
 package com.tatsuowatanabe.postalcodetutorial.form.postal;
 
+import org.springframework.beans.BeanUtils;
+
+import com.tatsuowatanabe.postalcodetutorial.dto.PostalDto;
+
 public class PostalForm {
 	private Integer id;
 	private String code;
@@ -54,5 +58,11 @@ public class PostalForm {
 
 	public void setAddress2(String address2) {
 		this.address2 = address2;
+	}
+	
+	public PostalDto toDto() {
+		PostalDto dto = new PostalDto();
+		BeanUtils.copyProperties(this, dto);
+		return dto;
 	}
 }

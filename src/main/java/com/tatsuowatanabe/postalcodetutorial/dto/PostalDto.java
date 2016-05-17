@@ -7,6 +7,7 @@ public class PostalDto {
 	private String prefecture_code;
 	private String address1;
 	private String address2;
+	public final int limit = 300;
 
 	public Integer getId() {
 		return id;
@@ -21,7 +22,8 @@ public class PostalDto {
 	}
 
 	public void setCode(String code) {
-		this.code = code;
+		if (code == null) return;
+		this.code = escapeSQLSpecialChars(code.trim().replaceAll("-", ""));
 	}
 
 	public String getPrefecture_name() {
@@ -60,4 +62,7 @@ public class PostalDto {
 		return this.code.replaceAll("(\\d{3})(\\d{4})", "$1-$2");
 	}
 
+	public String escapeSQLSpecialChars(String str) {
+		return str.replaceAll("([%_])", "\\$1");
+	}
 }

@@ -15,8 +15,8 @@ public class PostalService {
 	@Autowired
 	private PostalMapper postalMapper;
 	
-	public List<PostalDto> findWithPaging() {
-		List<Postal> list = postalMapper.findWithPaging();
+	public List<PostalDto> findLimited(PostalDto dto) {
+		List<Postal> list = postalMapper.findLimited(dto);
 		List<PostalDto> resultList = convertToDto(list);
 		return resultList;
 	}
@@ -28,4 +28,9 @@ public class PostalService {
 		
 		return resultList;
 	}
+
+	public Integer foundRows(PostalDto dto) {
+		return postalMapper.foundRows(dto);
+	}
+
 }
